@@ -12,7 +12,7 @@ CLE_JSON_PATH = "cles_acces.json"
 def paypal_webhook():
     data = request.json
 
-    # Exemple de vérification minimale : on ne vérifie pas la signature ici
+    # Vérification basique de l'événement
     event_type = data.get("event_type")
     resource = data.get("resource", {})
 
@@ -40,7 +40,11 @@ def paypal_webhook():
             cles_data = {"cles": [], "admin_key": "ADMIN-ULTIMATE-KEY"}
 
         cles_data.setdefault("cles", [])
-        cles_data["cles"].append({"cle": nouvelle_cle, "expiration": expiration})
+        cles_data["cles"].append({
+            "cle": nouvelle_cle,
+            "expiration": expiration,
+            "email": payer_email
+        })
 
         with open(CLE_JSON_PATH, "w") as f:
             json.dump(cles_data, f, indent=4)
@@ -52,3 +56,4 @@ def paypal_webhook():
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
+
