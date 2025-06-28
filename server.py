@@ -8,6 +8,10 @@ app = Flask(__name__)
 
 CLE_JSON_PATH = "cles_acces.json"
 
+@app.route("/")
+def index():
+    return "✅ Serveur Flask opérationnel !"
+
 @app.route("/paypal-webhook", methods=["POST"])
 def paypal_webhook():
     data = request.json
