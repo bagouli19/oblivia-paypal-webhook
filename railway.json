@@ -6,6 +6,7 @@
     }
   },
   "deploy": {
-    "startCommand": "python server.py"
+    "startCommand": "python server.py",
+    "healthcheckPath": "/"
   }
 }
